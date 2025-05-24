@@ -1,0 +1,87 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace 'notify.gotify'
+    compileSdk 35
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
+
+    defaultConfig {
+        applicationId "notify.gotify"
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+        def props = new Properties()
+        def localPropsFile = rootProject.file('local.properties')
+        if (localPropsFile.exists()){
+            props.load(new FileInputStream(localPropsFile))
+        }
+        def wsUrl = props.getProperty("gotify.wss.url","")
+        buildConfigField "String","GOTIFY_WSS_URL", "\"${wsUrl}\""
+//        flavorDimensions "environment"
+//
+//        def props = new Properties()
+//        def localPropsFile = rootProject.file("local.properties")
+//        if (localPropsFile.exists()) {
+//            props.load(new FileInputStream(localPropsFile))
+//        }
+//
+//        def gotifyUrl = props.getProperty("gotify.wss.url", "")
+//
+//        productFlavors {
+//            prod {
+//                dimension "environment"
+//                buildConfigField 'String', 'GOTIFY_WSS_URL', "\"${gotifyUrl}\""
+//            }
+//
+//            dev {
+//                dimension "environment"
+//                buildConfigField 'String', 'GOTIFY_WSS_URL', "\"${gotifyUrl}\""
+//            }
+//        }
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}
+
+dependencies {
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.activity
+    implementation libs.androidx.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+    // WebSocket (OkHttp)
+    implementation libs.okhttp
+    // Testing
+//    testImplementation 'junit:junit:4.13.2'
+//    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
+//    testImplementation "io.mockk:mockk:1.13.10"
+    // Room
+//    def room_version = "2.6.1"
+//    implementation "androidx.room:room-runtime:$room_version"
+//    kapt "androidx.room:room-compiler:$room_version"
+    // Kotlin coroutine support for Room
+//    implementation "androidx.room:room-ktx:$room_version"
+}
