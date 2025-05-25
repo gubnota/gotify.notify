@@ -1,6 +1,6 @@
 ## Gotify Notify
 
-![video](https://github.com/user-attachments/assets/149207b9-d332-42cb-93c9-e15cc9bff58a)
+![video](https://github.com/user-attachments/assets/457e6731-8bea-41a1-91b5-b6d2b08a2fe0)
 
 It's a simple app that receives notifications at your mobile device from [Gotify](https://gotify.net) server.
 Gotify repo has its own implementation, but it's just a wrapper around WebSocket protocol.
@@ -48,3 +48,13 @@ curl -X POST "http://192.168.1.65:8080/message?token=AIM-Ptoh.ZfceYW" \
 5. You should receive a notification at your mobile client endpoint.
 
 6. Check Logcat if something goes wrong.
+
+## Misc
+
+How to run from command line:
+
+```sh
+./gradlew assembleDebug
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb shell am start -n notify.gotify/.MainActivity
+```
